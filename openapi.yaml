@@ -1,0 +1,101 @@
+swagger: '2.0'
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: Simple Inventory API
+
+
+paths:
+  /report/inventory:
+    post:
+      summary: posts inventory
+      operationId: app.add_inventory
+      description: Stores a inventory report
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: inventoryReading
+        description: Inventory Reading
+        schema:
+          $ref: '#/definitions/InventoryItem'
+      responses:
+        201:
+          description: item added
+
+        400:
+          description: invalid input, object invalid
+
+        409:
+          description: an existing item already exists
+
+  /report/status:
+    post:
+      summary: reports status on an item
+      operationId: app.add_status
+      description: Stores a status on a item
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: itemStatus
+        description: Status on an item
+        schema:
+          $ref: '#/definitions/ItemStatus'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+
+definitions:
+  InventoryItem:
+    type: object
+    required:
+    - item_id
+    - name
+    - manufacturer
+    - warehouse
+    properties:
+      item_id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Widget Adapter
+      manufacturer:
+        type: string
+        example: ACME Corporation
+      warehouse:
+        type: string
+        example: 001
+
+  ItemStatus:
+    type: object
+    required:
+    - item_id
+    - status
+    - destination
+    - deliverydate
+    properties:
+      item_id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      status:
+        type: string
+        example: Outgoing
+      destination:
+        type: string
+        example: 001
+      deliverydate:
+        type: string
+        format: date-time
+        example: 2019-01-29T01:12:33
