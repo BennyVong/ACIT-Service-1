@@ -7,9 +7,6 @@ from connexion import NoContent
 import requests
 from pykafka import KafkaClient
 
-from Lab1.inventory import Inventory
-from Lab1.status import Status
-
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
 
